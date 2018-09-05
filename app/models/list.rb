@@ -1,6 +1,4 @@
-class List < ActiveRecord::Base 
-
+class List < ActiveRecord::Base
+    has_many :tasks
     belongs_to :user
-    validates :content, presence: true
-
 end

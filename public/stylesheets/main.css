@@ -113,3 +113,15 @@
     line-height: 24px;
   }
 }
+
+
+
+/*****************Custom Styling**********************/
+p.complete{
+  text-decoration: line-through;
+}
+
+li p{
+  display: inline;
+}
+

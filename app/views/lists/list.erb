@@ -1,0 +1,11 @@
+<h1>Good <%=Helpers.time_of_day%>, <%= @user.username %></h1>
+    <hr>
+    <% @lists.each do |list| %>
+        <p><a href="/lists/<%=list.id%>"><%= list.name %></a>
+        <form action="/lists/<%=list.id%>" method="post">
+        <input type="hidden" id="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Delete List">
+        </form>
+        </p>
+        <hr>
+    <% end %>

@@ -1,49 +1,13 @@
-require './config/environment'
-
-class ApplicationController < Sinatra::Base
-
-  configure do
-    set :public_folder, 'public'
-    set :views, 'app/views'
-    enable :sessions
-    set :session_secret, "secret"
-
-  end
-
-  get "/" do
-    if Helpers.is_logged_in?(session)
-      redirect "/lists"
-    else
-      redirect "/signup"
-    end
-  end
-
-  helpers do 
-
-    def current_user
+class Helpers
+    def self.current_user(session)
         User.find_by(id: session[:user_id])
     end
 
-    def is_logged_in?
-        !!current_user
+    def self.is_logged_in?(session)
+        !!current_user(session)
     end
 
-    def authorize
-        if !is_logged_in? || current_user.nil?
-            redirect '/login'
-        end
-    end
-
-    def authorize_list_access(list_id)
-        user = current_user
-        redirect '/logout' if !!user.lists.find{|list| list.id == list_id}
-    end
-
-    def authorized?
-        !!logged_in? && !current_user.nil?
-    end
-
-    def time_of_day
+    def self.time_of_day
         hour = Time.now.to_s.split(" ")[1].split(":")[0].to_i
             if hour < 12
                 "Morning"
@@ -54,7 +18,7 @@ class ApplicationController < Sinatra::Base
             end
     end
 
-    def time_from_now(time)
+    def self.time_from_now(time)
             seconds = Time.now - time
             if seconds < 60
                 return "#{seconds.to_i} seconds ago"
@@ -70,7 +34,4 @@ class ApplicationController < Sinatra::Base
                 return "on #{time}"
             end
     end
-  end
-  
-
 end
