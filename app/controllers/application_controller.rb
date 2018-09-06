@@ -36,7 +36,8 @@ class ApplicationController < Sinatra::Base
 
     def authorize_list_access(list_id)
         user = current_user
-        redirect '/logout' if !!user.lists.find{|list| list.id == list_id}
+        redirect '/logout' if !user.lists.find{|list| list.id == list_id.to_i}
+        #  if user.id != list.user.id
     end
 
     def authorized?
