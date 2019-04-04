@@ -1,6 +1,21 @@
 <%=@list.content%>
+
+
 <form action="/lists/<%=@list.id%>" method="post">
-<input type="hidden" name="_method" value="patch">
-<input type="text" name="content" id="content">
-<input type="submit" value="submit">
+<input type="hidden" id="hidden" name="_method" value="patch">
+
+<ul>
+<%@list.tasks.each do |task|%>
+
+    <li>
+        <input type="checkbox" name="tasks[]" value="<%=task.id%>">
+        <p class="<%= "complete" if task.complete%>"><%=task.name%></p>
+    </li>
+<%end%>
+</ul>
+
+<textarea name="new_task" id="new_task" cols="10" rows="5" placeholder="Enter new task..."></textarea>
+<input type="submit" value="Update List">
+
+
 </form>

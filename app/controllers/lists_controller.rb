@@ -1,6 +1,5 @@
 class ListsController < ApplicationController
 
-  # GET: /lists
   get '/lists' do
     authorize
     @user = Helpers.current_user(session)
@@ -9,13 +8,11 @@ class ListsController < ApplicationController
 
   end
 
-  # GET: /lists/new
   get "/lists/new" do
     authorize
     erb :'/lists/create_list'
   end
 
-  # POST: /lists
   post '/lists' do
     user = Helpers.current_user(session)
     list = List.new(name: params[:list])
@@ -30,7 +27,8 @@ class ListsController < ApplicationController
   get '/lists/:id/edit' do
     @list = List.find_by_id(params[:id])
     if Helpers.is_logged_in?(session)
-      erb :'/lists/edit_list'
+      authorize_list_access(params[:id])
+      erb :'/lists/edit'
     else
       redirect '/login'
     end
@@ -75,24 +73,3 @@ class ListsController < ApplicationController
   end
 end
 
-
-#   # GET: /lists/5
-#   get "/lists/:id" do
-#     erb :"/lists/show"
-#   end
-
-#   # GET: /lists/5/edit
-#   get "/lists/:id/edit" do
-#     erb :"/lists/edit"
-#   end
-
-#   # PATCH: /lists/5
-#   patch "/lists/:id" do
-#     redirect "/lists/:id"
-#   end
-
-#   # DELETE: /lists/5/delete
-#   delete "/lists/:id/delete" do
-#     redirect "/lists"
-#   end
-# end
