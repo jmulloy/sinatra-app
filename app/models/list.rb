@@ -3,4 +3,4 @@ class List < ActiveRecord::Base
     belongs_to :user
 end
 
-# here is a comment
+
